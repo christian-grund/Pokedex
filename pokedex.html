@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="pokedex.css" />
+    <link rel="stylesheet" href="fonts.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body onload="loadPokemon()">
+
+    <header>
+      <div class="header-left">
+        <h1>Pokedex</h1>
+      </div>
+      <div class="header-right">
+        <form action="">
+          <input type="text" placeholder="Search Pokemon...">
+        </form>
+        <button>Back</button>
+      </div>
+    </header>
+
+    <div class="pokedex-wrapper">
+      <div class="pokedex" id="pokedex">
+        <div class="pokedex-top">
+          <div class="name-and-class">
+            <h1 id="pokemon-name">Name</h1>
+            <p id="number" class="number">####</p>
+          </div>
+          <div class="species" id="species">
+          </div>
+          <div class="pokemon-img">
+            <img id="pokemon-img" alt="Pokemon" />
+          </div>
+        </div>
+
+        <div class="info-container">
+          <div class="info-nav">
+            <h3 id="about-h" class="about-h" style="color: black" onclick="changeInfoData()">About</h3>
+            <h3 id="base-stats-h" class="base-stats-h" style="color: lightgray" onclick="changeInfoData()">Base Stats</h3>
+            </div>
+              <div class="about-data-wrapper" id="about-data-wrapper">
+                <div class="about-data">
+                  <p>Height</p>
+                  <span id="height"></span>
+                </div>
+                <div class="about-data">
+                  <p>Weight</p>
+                  <span id="weight"></span>
+                </div>
+                <div class="about-data">
+                  <p>Abilities</p>
+                  <div id="abilities"> </div>
+                </div>
+            </div>
+            <div class="base-stats" id="base-stats"  style="display: none;">
+
+            </div>
+            
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="pokedex.js"></script>
+  </body>
+</html>

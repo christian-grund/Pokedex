@@ -1,0 +1,201 @@
+/* -------------------------Global------------------------------ */
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: lightgray;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-top: 0;
+  margin-bottom: 0 !important;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex !important;
+  flex-direction: column;
+}
+
+/* -------------------------Header------------------------------ */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  padding-right: 24px;
+  gap: 16px;
+}
+
+/* -------------------------Pokemon Galery------------------------------ */
+
+/* -------------------------Pokedex Card Top------------------------------ */
+
+.pokedex-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.pokedex {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+  height: 625px;
+  width: 350px;
+  border: 1px solid;
+  border-radius: 40px;
+}
+
+.pokedex-top {
+  background-color: rgb(251, 108, 108);
+  background-image: url(./img/pokeball.png);
+  background-repeat: no-repeat;
+  background-position: bottom 0px right -32px;
+  background-size: 250px;
+  color: white;
+  height: 425px;
+  width: 100%;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 16px;
+}
+
+.name-and-class {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.classes {
+  display: flex;
+  gap: 12px;
+}
+
+.classes p {
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+}
+
+.pokemon-img {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 24px;
+}
+
+.pokemon-img img {
+  height: 250px;
+  width: auto;
+  z-index: 2;
+}
+
+/* -------------------------Pokedex Card Info------------------------------ */
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  width: 100%;
+  height: 100%;
+  margin-top: -40px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 32px;
+  background-color: white;
+}
+
+.info-nav {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.info-nav h3 {
+  cursor: pointer;
+}
+
+.color-black {
+  color: black !important;
+}
+
+.color-lightgray {
+  color: lightgray !important;
+}
+
+.about-data {
+  display: flex;
+  justify-content: start;
+  text-align: left;
+  padding-bottom: 8px;
+}
+
+.about-data p {
+  width: 110px;
+}
+
+.about-data span {
+  font-weight: bold;
+}
+
+.about-data div {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-data {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.stats-data p {
+  width: 120px;
+}
+
+.stats-data span {
+  width: 16px;
+}
+
+.progress,
+.progress-stacked {
+  /* justify-content: center; */
+  width: 150px;
+  margin-left: 24px;
+  --bs-progress-height: 6px !important;
+  --bs-progress-bar-bg: unset !important;
+  --bs-progress-bar-bg: #198754 !important;
+}
+
+/* .progress-bar {
+  background-color: unset !important;
+} */
+
+/* .progressbar-bg-green {
+  --bs-progress-bar-bg: #198754 !important;
+} */
+
+.progressbar-bg-red {
+  --bs-progress-bar-bg: unset !important;
+  --bs-progress-bar-bg: #dc3545 !important;
+}
