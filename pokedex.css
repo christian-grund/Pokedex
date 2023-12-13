@@ -24,20 +24,8 @@ p {
   flex-direction: column;
 }
 
-.bg-grass {
-  background-color: rgb(70, 210, 177);
-}
-
-.bg-fire {
-  background-color: rgb(251, 108, 108);
-}
-
-.bg-water {
-  background-color: rgb(118, 191, 254);
-}
-
-.bg-electric {
-  background-color: rgb(248, 208, 47);
+.d-block {
+  display: block !important;
 }
 
 /* -------------------------Header------------------------------ */
@@ -46,21 +34,39 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100px;
+}
+
+.header-left img {
+  padding-left: 24px;
+  padding-right: 163px;
   height: 60px;
+}
+
+.header-middle img {
+  height: 100px;
 }
 
 .header-right {
   display: flex;
   align-items: center;
   padding-right: 24px;
-  gap: 16px;
+}
+
+.header-right button {
+  height: 30px;
+  background-color: #ef4036;
+  border-width: 1px;
+  border-left: none;
+}
+
+.header-right button img {
+  height: 24px;
 }
 
 /* -------------------------Pokemon Galery------------------------------ */
 
 .pokemon-cards {
-  /* width: 100vw;
-  height: calc(100vh - 60px); */
   display: flex;
   flex-wrap: wrap;
   padding: 24px;
@@ -80,10 +86,14 @@ header {
   background-repeat: no-repeat;
   background-position: bottom -32px right -32px;
   background-size: 175px;
+  background-color: red;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.14);
 }
 
 .card-content:hover {
   cursor: pointer;
+  transform: scale(1.05);
 }
 
 .species-and-img {
@@ -109,11 +119,30 @@ header {
 
 /* -------------------------Pokedex Card Top------------------------------ */
 
-.pokedex-wrapper {
+/* .pokedex-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 100px);
+} */
+
+.pokedex-wrapper {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.pokedex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .pokedex {
@@ -123,7 +152,7 @@ header {
   flex-direction: column;
   height: 625px;
   width: 350px;
-  border: 1px solid;
+  /* border: 1px solid; */
   border-radius: 40px;
 }
 

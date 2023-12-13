@@ -1,23 +1,75 @@
-let pokemonNumber = [1, 2, 3, 4, 5];
-let pokemonByIndex = [];
+let allPokemon;
+let pokemons = [];
 let currentPokemon;
+let amountLoadedPokemon;
+let pokemonNumber = [1, 2, 3, 4, 5];
+let loadMore = 10;
+let filteredPokemonList = [];
+let colorsByType = {
+  normal: '#BBBBAA',
+  fire: '#CF3F26',
+  water: '#2D9BE3',
+  electric: '#FFDB00',
+  grass: '#62BC5A',
+  ice: '#74CFC0',
+  fighting: '#BC5544',
+  poison: '#9553CD',
+  ground: '#A67439',
+  psychic: '#FF6480',
+  bug: '#92C12A',
+  rock: '#BBAA66',
+  ghost: '#6E4370',
+  dragon: '#5770BE',
+  dark: '#4E4545',
+  steel: '#AAAABB',
+  fairy: '#EC8FE6',
+};
 
-async function loadPokemon() {
-  for (let i = 0; i < pokemonNumber.length; i++) {
-    const number = pokemonNumber[i];
-    let url = 'https://pokeapi.co/api/v2/pokemon/' + `${number}`;
-    let response = await fetch(url);
-    currentPokemon = await response.json();
-    pokemonByIndex.push(currentPokemon);
+async function init() {
+  await loadAllPokemon();
+  await loadPokemons(0, 10);
+}
 
-    generatePokemonCards(i);
+//////////////////////////// Load Pokemon-Data via API //////////////////////////////
+
+async function loadAllPokemon() {
+  let url = 'https://pokeapi.co/api/v2/pokemon?limit=151';
+  let response = await fetch(url);
+  allPokemon = await response.json();
+
+  addAllPokemonToArray();
+}
+
+function addAllPokemonToArray() {
+  for (let i = 0; i < allPokemon['results'].length; i++) {
+    let pokemonNames = allPokemon['results'][i]['name'];
+    pokemons.push(pokemonNames);
   }
 }
 
-function generatePokemonCards(i) {
+async function loadPokemons(a, b) {
+  for (let i = a; i < b; i++) {
+    let urlCurrentPokemon = allPokemon['results'][i]['url'];
+    let response = await fetch(urlCurrentPokemon);
+    currentPokemon = await response.json();
+
+    console.log('currentPokemon:', currentPokemon);
+    renderPokemonCards(i);
+  }
+}
+
+//////////////////////////// Pokemon Galery //////////////////////////////
+
+function renderPokemonCards(i) {
+  renderPokemonCardsHTML(i);
+  contentCards(i);
+  setBackgroundColor(i);
+}
+
+function renderPokemonCardsHTML(i) {
   let cards = document.getElementById('cards');
   cards.innerHTML += /*html*/ `
-    <div class="card-content bg-grass" onclick="openPopup(${i})">
+    <div class="card-content" id="card-content${i}" onclick="openPokedex(${i})">
           <h1 id="pokemon-name-card${i}"></h1>
           <div class="species-and-img">
             <div class="species" id="species-card${i}"></div>
@@ -25,76 +77,12 @@ function generatePokemonCards(i) {
           </div>
         </div>
     `;
-
-  renderPokemonCards(i);
 }
 
-function renderPokemonCards(i) {
-  document.getElementById(`pokemon-name-card${i}`).innerHTML =
-    capitalizeFirstLetter(currentPokemon['name']);
-  document.getElementById(`img-card${i}`).src =
-    currentPokemon['sprites']['other']['dream_world']['front_default'];
+function contentCards(i) {
+  document.getElementById(`pokemon-name-card${i}`).innerHTML = capitalizeFirstLetter(currentPokemon['name']);
+  document.getElementById(`img-card${i}`).src = currentPokemon['sprites']['other']['dream_world']['front_default'];
 
-  renderSpecies(i);
-}
-
-function openPopup(i) {
-  document.getElementById('cards').classList.add('d-none');
-  document.getElementById('pokedex-wrapper').classList.remove('d-none');
-
-  renderPokemonInfo(i);
-}
-
-function renderPokemonInfo(i) {
-  document.getElementById(`pokemon-name`).innerHTML = capitalizeFirstLetter(
-    pokemonByIndex[i]['name']
-  );
-  console.log(pokemonByIndex[i]['name']);
-
-  document.getElementById(`number`).innerHTML = '#00' + pokemonByIndex[i]['id'];
-
-  document.getElementById(`pokemon-img`).src =
-    pokemonByIndex[i]['sprites']['other']['dream_world']['front_default'];
-  document.getElementById(`species`).innerHTML = capitalizeFirstLetter(
-    pokemonByIndex[i]['types']['0']['type']['name']
-  );
-  document.getElementById(`height`).innerHTML =
-    (pokemonByIndex[i]['height'] * 0.1).toFixed(2) + ' m';
-  document.getElementById(`weight`).innerHTML =
-    (pokemonByIndex[i]['weight'] * 0.1).toFixed(2) + ' kg';
-  renderAbilities(i);
-  renderBaseStats(i);
-}
-
-// async function loadPokemon() {
-//   let url = 'https://pokeapi.co/api/v2/pokemon/charmander';
-//   let response = await fetch(url);
-//   currentPokemon = await response.json();
-//   console.log(currentPokemon);
-
-//   renderPokemonInfo();
-// }
-
-// function renderPokemonInfo() {
-//   document.getElementById('pokemon-name').innerHTML = capitalizeFirstLetter(
-//     currentPokemon['name']
-//   );
-//   document.getElementById('number').innerHTML = '#00' + currentPokemon['id'];
-
-//   document.getElementById('pokemon-img').src =
-//     currentPokemon['sprites']['other']['dream_world']['front_default'];
-//   document.getElementById('species').innerHTML = capitalizeFirstLetter(
-//     currentPokemon['types']['0']['type']['name']
-//   );
-//   document.getElementById('height').innerHTML =
-//     (currentPokemon['height'] * 0.1).toFixed(2) + ' m';
-//   document.getElementById('weight').innerHTML =
-//     (currentPokemon['weight'] * 0.1).toFixed(2) + ' kg';
-//   renderAbilities();
-//   renderBaseStats();
-// }
-
-function renderSpecies(i) {
   let species = currentPokemon['types'];
   for (let j = 0; j < species.length; j++) {
     const speciesValues = species[j]['type']['name'];
@@ -104,23 +92,44 @@ function renderSpecies(i) {
   }
 }
 
+//////////////////////////// Pokedex Card //////////////////////////////
+
+function renderPokedex(i) {
+  renderPokedexHTML(); //
+  renderPokemonData(i);
+  renderAbilities(i);
+  renderBaseStats(i);
+}
+
+function renderPokemonData(i) {
+  document.getElementById(`pokemon-name`).innerHTML = capitalizeFirstLetter(currentPokemon['name']);
+  document.getElementById(`number`).innerHTML = '#00' + currentPokemon['id'];
+  document.getElementById(`pokemon-img`).src = currentPokemon['sprites']['other']['dream_world']['front_default'];
+  document.getElementById(`species`).innerHTML = capitalizeFirstLetter(currentPokemon['types']['0']['type']['name']);
+  document.getElementById(`height`).innerHTML = (currentPokemon['height'] * 0.1).toFixed(2) + ' m';
+  document.getElementById(`weight`).innerHTML = (currentPokemon['weight'] * 0.1).toFixed(2) + ' kg';
+}
+
 function renderAbilities(i) {
-  let abilities = pokemonByIndex[i]['abilities'];
+  let abilities = currentPokemon['abilities'];
+  let abilityContent = document.getElementById(`abilities`);
+  abilityContent.innerHTML = '';
   for (let j = 0; j < abilities.length; j++) {
     const ability = capitalizeFirstLetter(abilities[j]['ability']['name']);
-    document.getElementById(`abilities`).innerHTML += /*html*/ `
+    abilityContent.innerHTML += /*html*/ `
     <span>${ability}</span>
     `;
   }
 }
 
 function renderBaseStats(i) {
-  let stats = pokemonByIndex[i]['stats'];
+  let stats = currentPokemon['stats'];
   const statName = ['HP', 'Attak', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'];
+  let baseStats = document.getElementById(`base-stats`);
+  baseStats.innerHTML = '';
   for (let j = 0; j < stats.length; j++) {
-    // const statName = capitalizeFirstLetter(stats[i]['stat']['name']);
     const statValue = stats[j]['base_stat'];
-    document.getElementById(`base-stats`).innerHTML += /*html*/ `
+    baseStats.innerHTML += /*html*/ `
     <div class="stats-data">
       <p>${statName[j]}</p>
       <span><b>${statValue}</b></span>
@@ -135,7 +144,6 @@ function checkProgressBar(statValue, j) {
   let barColor = document.getElementById(`progressbar${j}`);
   if (statValue < 50) {
     barColor.classList.add('progressbar-bg-red');
-    console.log('True');
   }
 }
 
@@ -145,6 +153,61 @@ function changeInfoData() {
   document.getElementById('about-data-wrapper').classList.toggle('d-none');
   document.getElementById('base-stats').classList.toggle('d-flex');
 }
+
+function setBackgroundColor(i) {
+  for (let x = 0; x < pokemons.length; x++) {
+    let backgroundByType = currentPokemon['types'][0]['type']['name'];
+    let backgroundColor = colorsByType[backgroundByType];
+
+    document.getElementById(`card-content${i}`).style.background = backgroundColor;
+    document.getElementById('pokedex-top').style.background = backgroundColor;
+  }
+}
+
+//////////////////////////// Search //////////////////////////////
+
+function searchInput() {
+  let searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', searchPokemon); // event listener wird aktiviert und bleibt aktiv
+}
+
+function searchPokemon() {
+  let search = document.getElementById('search').value;
+  search = search.toLowerCase();
+  // console.log(search);
+
+  let cards = document.getElementById('cards');
+  cards.innerHTML = '';
+
+  for (let index = 0; index < pokemons.length; index++) {
+    let name = pokemons[index]['name'];
+    if (name.toLowerCase().includes(search)) {
+      generatePokemonCards(index);
+    }
+  }
+}
+
+function deleteInput() {
+  document.getElementById('search').value = '';
+}
+
+//////////////////////////// Open Pokedex //////////////////////////////
+
+function openPokedex(i) {
+  document.getElementById('pokedex-wrapper').classList.add('d-block');
+
+  renderPokemonInfo(i);
+}
+
+function closePokedex() {
+  document.getElementById('pokedex-wrapper').classList.remove('d-block');
+}
+
+function doNotClose(event) {
+  event.stopPropagation();
+}
+
+//////////////////////////// Usefull Functions //////////////////////////////
 
 // Replaces first letter of a string in Uppercase
 function capitalizeFirstLetter(string) {
