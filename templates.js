@@ -1,10 +1,28 @@
-function renderPokedexHTML() {
+function renderPokemonCardsHTML(currentPokemon, i) {
+  let cardsHTML = document.getElementById('cards');
+  cardsHTML.innerHTML += /*html*/ `
+    <div class="card-content" id="card-content${i}" onclick="loadClickedPokemon(${i})">
+      <div class="name-and-number">
+          <h1 id="pokemon-name-card${i}"></h1>
+          <p id="number${i}" class="number">####</p>
+          </div>
+          <div class="species-and-img">
+            <div class="species" id="species-card${i}"></div>
+            <img class="img-card" id="img-card${i}" src="" alt="Pokemon-Image-Card">
+          </div>
+        </div>
+    `;
+}
+
+function renderPokedexHTML(i) {
   let pokedexHTML = document.getElementById('pokedex-wrapper');
   pokedexHTML.innerHTML = /*html*/ `
-    <div class="pokedex-container">
+    <section class="pokedex-container" id="pokedex-container">
+      <div class="wrapper-buttons" onclick="doNotClose(event)">
+      <div class="previous-btn"  onclick="previousPokemon(${i})"><img src="./img/arrow-left.png" alt="Arrow-Left" id="previous-btn"></div>
         <div class="pokedex" id="pokedex" onclick="doNotClose(event)">
           <div class="pokedex-top" id="pokedex-top">
-            <div class="name-and-class">
+            <div class="name-and-number">
               <h1 id="pokemon-name">Name</h1>
               <p id="number" class="number">####</p>
             </div>
@@ -36,6 +54,38 @@ function renderPokedexHTML() {
             <div class="base-stats" id="base-stats" style="display: none"> </div>
           </div>
         </div>
+        <div class="next-btn" onclick="nextPokemon(${i})"><img src="./img/arrow-left.png" alt="Arrow-Left" id="next-btn"></div>
       </div>
+    </section>
     `;
+}
+
+function renderAbilities() {
+  let abilities = clickedPokemon['abilities'];
+  let abilityContent = document.getElementById(`abilities`);
+  abilityContent.innerHTML = '';
+  for (let j = 0; j < abilities.length; j++) {
+    const ability = capitalizeFirstLetter(abilities[j]['ability']['name']);
+    abilityContent.innerHTML += /*html*/ `
+    <span>${ability}</span>
+    `;
+  }
+}
+
+function renderBaseStats() {
+  let stats = clickedPokemon['stats'];
+  const statName = ['HP', 'Attak', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'];
+  let baseStats = document.getElementById(`base-stats`);
+  baseStats.innerHTML = '';
+  for (let j = 0; j < stats.length; j++) {
+    const statValue = stats[j]['base_stat'];
+    baseStats.innerHTML += /*html*/ `
+    <div class="stats-data">
+      <p>${statName[j]}</p>
+      <span><b>${statValue}</b></span>
+      <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar" id="progressbar${j}" style="width: ${statValue}%"></div>
+    `;
+    checkProgressBar(statValue, j);
+  }
 }

@@ -3,37 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Christians Pokedex</title>
-    <link rel="stylesheet" href="pokedex.css" />
+    <title>Christians Pokédex</title>
+    <link rel="stylesheet" href="pokedex.css?version=1" />
     <link rel="stylesheet" href="fonts.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="shortcut icon" type="image/x-icon" href="./img/pokeball-icon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </head>
-  <body onload="init()">
-    <!-------------------------Header------------------------------>
+  <body id="body" onload="loadingScreen()">
+    <section id="loading-screen" class="loading-screen d-none">
+      <div id="loading-content" class="loading-content">
+        <h2 id="load-more-h2">Loading Pokémon...</h2>
+        <img src="./img/pokeball-loadingscreen.png" alt="Loadingscreen" id="loading-animation" class="loading-img" />
+      </div>
+    </section>
 
-    <header>
+    <header id="header">
       <div class="header-left">
-        <img src="./img/pokeball-icon.png" alt="Pokedex-Logo" />
+        <img src="./img/pokeball-icon.png" alt="Pokedex-Logo" onclick="refreshPage()" />
       </div>
       <div class="header-middle">
-        <img src="./img/logo-pokedex.png" alt="Pokedex-Logo" />
+        <img src="./img/logo-pokedex.png" alt="Pokedex-Logo" onclick="refreshPage()" />
       </div>
       <div class="header-right">
         <form action="">
-          <input type="text" id="search" placeholder="Search Pokemon..." />
+          <input type="text" id="search" placeholder="Search Pokémon..." onkeyup="searchPokemon()" />
         </form>
-        <button><img src="./img/delete.svg" alt="Delete Input" onclick="deleteInput()" /></button>
       </div>
     </header>
 
-    <!-------------------------Pokemon Galery ------------------------------>
-
     <div class="pokemon-cards" id="cards"> </div>
 
-    <!-------------------------Pokedex Card------------------------------>
-
     <section class="pokedex-wrapper" id="pokedex-wrapper" onclick="closePokedex()"> </section>
+
+    <div class="load-more-container" id="load-more-container">
+      <button class="btn btn-primary load-more-btn" id="load-more-btn" type="submit" onclick="loadMorePokemon()">Load More Pokemon</button>
+    </div>
 
     <script src="templates.js"></script>
     <script src="pokedex.js"></script>
