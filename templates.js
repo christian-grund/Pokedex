@@ -53,9 +53,14 @@ function renderPokedexHTML(i) {
             </div>
             <div class="base-stats" id="base-stats" style="display: none"> </div>
           </div>
-        </div>
-        <div class="next-btn" onclick="nextPokemon(${i})"><img src="./img/arrow-left.png" alt="Arrow-Left" id="next-btn"></div>
+          <div class="buttons-bottom" style="display: none">
+        <img src="./img/arrow-left.png" alt="Arrow-Left-Button" class="previous-btn-bottom" id="previous-btn-bottom" onclick="previousPokemon(${i})">
+        <img src="./img/arrow-left.png" alt="Arrow-Right-Button" class="next-btn-bottom" id="next-btn-bottom" onclick="nextPokemon(${i})">
       </div>
+        </div>
+        <div class="next-btn" onclick="nextPokemon(${i})"><img src="./img/arrow-left.png" alt="Arrow-Right" id="next-btn"></div>
+      </div>
+      
     </section>
     `;
 }

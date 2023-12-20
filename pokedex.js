@@ -43,6 +43,7 @@ function toggleVisibilityAndRotation() {
   document.getElementById('loading-screen').classList.toggle('d-flex');
   document.getElementById('loading-screen').classList.toggle('d-none');
   document.getElementById('loading-animation').classList.toggle('rotation-animation');
+  document.getElementById('body').classList.toggle('stop-scrolling');
 }
 
 ////////////////// Load Pokemon-Data via API for Galery //////////////////
@@ -152,7 +153,9 @@ function contentCards(currentPokemon, i) {
   }
 }
 
-const zeroPad = (num, places) => String(num).padStart(places, '0');
+function zeroPad(num, places) {
+  return String(num).padStart(places, '0');
+}
 
 function setBackgroundColorCards(currentPokemon, i) {
   for (let x = 0; x < pokemon.length; x++) {
@@ -202,7 +205,7 @@ function renderPokedex(i) {
 
 function renderPokemonData() {
   document.getElementById('pokemon-name').innerHTML = capitalizeFirstLetter(clickedPokemon['name']);
-  document.getElementById('number').innerHTML = '#00' + clickedPokemon['id'];
+  document.getElementById('number').innerHTML = '#' + zeroPad(clickedPokemon['id'], 3);
   document.getElementById('pokemon-img').src = clickedPokemon['sprites']['other']['dream_world']['front_default'];
   document.getElementById('species').innerHTML = capitalizeFirstLetter(clickedPokemon['types']['0']['type']['name']);
   document.getElementById('height').innerHTML = (clickedPokemon['height'] * 0.1).toFixed(2) + ' m';
@@ -230,7 +233,9 @@ function setBackgroundColorPokedex() {
 
     document.getElementById('pokedex-top').style.background = backgroundColor;
     document.getElementById('previous-btn').style.background = backgroundColor;
+    document.getElementById('previous-btn-bottom').style.background = backgroundColor;
     document.getElementById('next-btn').style.background = backgroundColor;
+    document.getElementById('next-btn-bottom').style.background = backgroundColor;
   }
 }
 

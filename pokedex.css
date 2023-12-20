@@ -1,11 +1,15 @@
 /* -------------------------Global------------------------------ */
+html {
+  overflow-x: hidden !important;
+}
+
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   min-height: 100vh;
   min-width: 100vw;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   scroll-behavior: smooth;
 }
 
@@ -39,6 +43,10 @@ p {
 
 .overflow-hidden {
   overflow: hidden !important;
+}
+
+.stop-scrolling {
+  position: fixed !important;
 }
 
 /* -------------------------Header------------------------------ */
@@ -310,6 +318,27 @@ header {
   transform: rotate(180deg);
 }
 
+.buttons-bottom {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.previous-btn-bottom {
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-right: 32px;
+}
+
+.next-btn-bottom {
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: rotate(180deg);
+}
+
 .load-more-container {
   display: flex;
   justify-content: center;
@@ -381,6 +410,14 @@ header {
   }
 }
 
+/* ------------------------- Media Query ------------------------------ */
+
+@media all {
+  body {
+    overflow-x: hidden !important;
+  }
+}
+
 @media (max-width: 660px) {
   .header-left {
     display: none;
@@ -398,15 +435,35 @@ header {
   .header-right {
     padding-right: 0;
   }
+
+  .previous-btn {
+    display: none;
+  }
+
+  .next-btn {
+    display: none;
+  }
+
+  .buttons-bottom {
+    display: flex !important;
+  }
 }
 
 @media (max-width: 450px) {
+  html {
+    min-width: 100vw !important;
+  }
+
   #load-more-h2 {
     font-size: 32px;
   }
 }
 
 @media (max-width: 420px) {
+  html {
+    min-width: 100vw !important;
+  }
+
   .pokemon-cards {
     padding: 0;
     padding-top: 24px;
@@ -414,6 +471,16 @@ header {
 
   .card-content {
     margin-left: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  html {
+    min-width: 100vw !important;
+  }
+
+  .pokedex {
+    width: 300px;
   }
 }
 
